@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+            <input type="text" v-model="message" @keyup.enter="sendMessage">
+            <button @click="sendMessage">Send</button>
+            <ul>
+              <li v-for="msg in messages">
+                <span><b>{{ msg.time }} | {{ msg.me ? 'Eu' : 'Fd ' + msg.fd}}</b>: {{ msg.value }}</span>
+              </li>
+            </ul>
+    </div>
+
+    <script type="module">
+        import { createApp, ref, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        createApp({
+            setup() {
+                const message = ref('')
+                const messages = ref([]);
+                const socket = ref(null);
+
+                onMounted(() => {
+                    socket.value = new WebSocket('ws://127.0.0.1:9502');
+                    socket.value.onopen = (event) => {
+                        console.log('onopen', event)
+                    };
+                    socket.value.onmessage = (event) => {
+                        console.log('onmessage', event)
+                        messages.value.push(JSON.parse(event.data))
+                    };
+                    socket.value.onerror = (event) => {
+                        console.log('onerror', event)
+                    };
+                })
+
+                async function sendMessage() {
+                    if (message.value.trim() !== '') {
+                        socket.value.send(message.value);
+                        message.value = '';
+                    }
+                }
+                
+                return {
+                    messages,
+                    message,
+                    socket,
+                    sendMessage
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
