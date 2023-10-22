@@ -26,12 +26,16 @@
                 const socket = ref(null);
 
                 onMounted(() => {
+                    // Ao montar os componente vuejs conecta no websockets
                     socket.value = new WebSocket('ws://127.0.0.1:9502');
+
+                    // sempre que receber uma mensagem adiciona ao array de mensagens
                     socket.value.onmessage = (event) => {
                         messages.value.push(JSON.parse(event.data))
                     };
                 })
 
+                // envia uma mensagem para quem estiver conectado
                 async function sendMessage() {
                     if (message.value.trim() !== '') {
                         socket.value.send(message.value);
