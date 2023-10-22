@@ -4,8 +4,8 @@ Uma implementação bem simples de um WebSockets Server em PHP com Swoole e um C
 
 ## Requerimentos mínimos
 
-PHP 8.0
-Swoole 5.0
+- PHP 8.0
+- Swoole 5.0
 
 ## Como testar
 
