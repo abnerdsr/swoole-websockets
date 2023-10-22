@@ -4,8 +4,8 @@ Uma implementação bem simples de um WebSockets Server em PHP com Swoole e um C
 
 ## Requerimentos mínimos
 
-- PHP 8.0
-- Swoole 5.0
+- [PHP 8.0](https://php.watch/articles/install-php82-ubuntu-debian)
+- [Swoole 5.0](https://github.com/swoole/swoole-src#%EF%B8%8F-installation)
 
 ## Como testar
 
